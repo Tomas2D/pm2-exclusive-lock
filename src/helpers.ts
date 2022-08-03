@@ -4,16 +4,15 @@ export const noop = () => {
   /* Empty handler */
 };
 
-export const withTimeout = <R, P, T extends (...args: P[]) => Promise<R>>(logic: T, ms: number) => {
-  return (...args: Parameters<T>) => {
-    let id: NodeJS.Timeout;
+export function withTimeout<P extends unknown[], R>(fn: (...args: P) => R, ms: number) {
+  return async (...args: P): Promise<Awaited<R>> => {
+    let timeoutId: NodeJS.Timeout
 
-    const timeout = new Promise<never>((resolve, reject) => {
-      id = setTimeout(() => {
-        reject(new LockTimeoutError());
-      }, ms);
+    const timeout = new Promise<never>((_, reject) => {
+      timeoutId = setTimeout(() => reject(new LockTimeoutError()), ms)
     });
 
-    return Promise.race([logic(...args), timeout]).finally(() => clearTimeout(id));
+    return Promise.race([fn(...args), timeout])
+      .finally(() => clearTimeout(timeoutId))
   };
-};
+}
