@@ -1,10 +1,11 @@
 import pm2 from 'pm2';
+import type { ProcessDescription } from 'pm2';
 import { getCurrentProcessId, getInstances } from 'pm2-master-process';
 import PromiseQueue from 'promise-queue';
 import { Task } from 'promise-based-task';
 import { noop, withTimeout } from './helpers';
 import { LockCommunicationError, LockMasterError, SessionDestroyedError } from './errors';
-import type { IConfig, ILogger, ILockMessage } from './types';
+import type { IConfig, ILockMessage, ILogger } from './types';
 import { LOCK_MSG_ACTION } from './types';
 
 export class LockService {
@@ -26,7 +27,7 @@ export class LockService {
     this._lockTimeout = lockTimeout;
     this._groupId = groupId || 'DEFAULT';
 
-    this._init().catch(noop)
+    this._init().catch(noop);
   }
 
   async lock<T>(fn: () => Promise<T>): Promise<T> {
@@ -59,7 +60,7 @@ export class LockService {
         waiting: this._globalQueue.getQueueLength(),
         inProgress: this._globalQueue.getPendingLength(),
       },
-      processes: await this._getProcess(),
+      processes: await this._getProcesses(),
       selfId: getCurrentProcessId(),
       masterProcessId: await this._getMasterInstanceId(),
     };
@@ -67,7 +68,7 @@ export class LockService {
 
   private _init() {
     if (this._isDestroyed) {
-      throw new SessionDestroyedError()
+      throw new SessionDestroyedError();
     }
     if (this._isInitialed) {
       return this._isInitialed;
@@ -82,6 +83,10 @@ export class LockService {
 
     // Listen for messages
     const incomingMessageHandler = (message: ILockMessage) => {
+      if (!message || message?.groupId !== this._groupId) {
+        return;
+      }
+
       this._logger?.debug(`Received message type: "${message?.data}"`);
 
       if (message?.data === LOCK_MSG_ACTION.PING) {
@@ -94,7 +99,7 @@ export class LockService {
           this._invalidateMaster();
         }
         if (message.processId === getCurrentProcessId()) {
-          process.off('message', incomingMessageHandler)
+          process.off('message', incomingMessageHandler);
         }
         return;
       }
@@ -126,7 +131,7 @@ export class LockService {
     process.on('message', incomingMessageHandler);
 
     // Create PM2 connection
-    pm2.connect(true, (err) => {
+    pm2.connect(true, (err: Error) => {
       if (err) {
         process.off('message', incomingMessageHandler);
         if (this._isInitialed) {
@@ -218,7 +223,9 @@ export class LockService {
   }
 
   private async _retrieveLock(): Promise<void> {
-    const { task: waitAck, cancelWaitForMessage } = this._waitForMessage(LOCK_MSG_ACTION.REQ_LOCK_ACK);
+    const { task: waitAck, cancelWaitForMessage } = this._waitForMessage(
+      LOCK_MSG_ACTION.REQ_LOCK_ACK,
+    );
     const receivers = await this._sendMessage(LOCK_MSG_ACTION.REQ_LOCK);
 
     if (receivers.length === 0) {
@@ -258,7 +265,7 @@ export class LockService {
               processId: getCurrentProcessId(),
               groupId: this._groupId,
             },
-            (err) => {
+            (err: Error) => {
               if (err) {
                 this._logger?.error(`Error when sending a message to a process`, err);
               }
@@ -270,14 +277,39 @@ export class LockService {
     );
   }
 
-  private async _getProcess() {
-    return getInstances({
+  private async _validateProcess(processId?: number): Promise<boolean> {
+    if (processId === null || processId === undefined) {
+      return false;
+    }
+
+    const { task: responseMessage, cancelWaitForMessage } = this._waitForMessage(
+      LOCK_MSG_ACTION.PONG,
+    );
+
+    return Promise.all([
+      responseMessage,
+      withTimeout(() => this._sendMessage(LOCK_MSG_ACTION.PING, [processId]), 1500)(),
+    ])
+      .then(() => true)
+      .catch(() => false)
+      .finally(cancelWaitForMessage);
+  }
+
+  private async _getProcesses(): Promise<ProcessDescription[]> {
+    const processes: ProcessDescription[] = await getInstances({
       instanceStatus: ['online'],
     });
+
+    const statuses: boolean[] = await Promise.all(
+      processes.map((process) => this._validateProcess(process.pm_id)),
+    );
+
+    this._logger?.debug(`Statuses of processes with same name "${statuses.join(',')}"`);
+    return processes.filter((_, i) => statuses[i]);
   }
 
   private async _getProcessIds(): Promise<number[]> {
-    const instances = await this._getProcess();
+    const instances = await this._getProcesses();
     return instances.map((instance) => Number(instance.pm_id));
   }
 }
