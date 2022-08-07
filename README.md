@@ -47,6 +47,7 @@ lockService.destroy()
 import { LockService } from 'pm2-exclusive-lock'
 
 const lockService = new LockService({
+  groupId: 'FS_LOCK',
   lockTimeout: 10 * 1000, // 10 seconds,
   logger: {
     debug: console.debug,
@@ -70,6 +71,7 @@ lockService.destroy()
 interface IConfig {
   logger?: ILogger;
   lockTimeout?: number; // miliseconds
+  groupId?: string; // name of lock group
 }
 
 interface ILogger {
@@ -84,4 +86,3 @@ interface ILogger {
 - [ ] Make every instance unique 🔥
 - [ ] Add tests
 - [ ] Describe how locking works
-- [ ] Implement custom number of nodes running
