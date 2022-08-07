@@ -3,6 +3,7 @@ export interface ILockMessage {
   data: LOCK_MSG_ACTION;
   processId: number;
   ts: number;
+  groupId: string;
 }
 
 export enum LOCK_MSG_ACTION {
@@ -24,4 +25,5 @@ export interface ILogger {
 export interface IConfig {
   logger?: ILogger;
   lockTimeout?: number;
+  groupId?: string;
 }

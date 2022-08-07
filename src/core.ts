@@ -17,12 +17,14 @@ export class LockService {
   private _isInitialed?: Task<void>;
   private _isDestroyed?: Task<void>;
 
+  private readonly _groupId: string;
   private readonly _lockTimeout: number;
   private readonly _logger?: ILogger;
 
-  constructor({ logger, lockTimeout = 5 * 60 * 1000 }: IConfig = {}) {
+  constructor({ logger, lockTimeout = 5 * 60 * 1000, groupId }: IConfig = {}) {
     this._logger = logger;
     this._lockTimeout = lockTimeout;
+    this._groupId = groupId || 'DEFAULT';
 
     this._init().catch(noop)
   }
@@ -194,7 +196,7 @@ export class LockService {
     const task = new Task<void>();
 
     const handler = (message: ILockMessage) => {
-      if (!message) {
+      if (!message || message?.groupId !== this._groupId) {
         return;
       }
 
@@ -254,6 +256,7 @@ export class LockService {
               topic: true,
               ts: Date.now(),
               processId: getCurrentProcessId(),
+              groupId: this._groupId,
             },
             (err) => {
               if (err) {
