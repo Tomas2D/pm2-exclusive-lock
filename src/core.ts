@@ -3,8 +3,13 @@ import type { ProcessDescription } from 'pm2';
 import { getCurrentProcessId, getInstances } from 'pm2-master-process';
 import PromiseQueue from 'promise-queue';
 import { Task } from 'promise-based-task';
-import { noop, withTimeout } from './helpers';
-import { LockCommunicationError, LockMasterError, SessionDestroyedError } from './errors';
+import { maxBy, noop, withTimeout } from './helpers';
+import {
+  LockCommunicationError,
+  LockMasterError,
+  MasterNotFound,
+  SessionDestroyedError,
+} from './errors';
 import type { IConfig, ILockMessage, ILogger } from './types';
 import { LOCK_MSG_ACTION } from './types';
 
@@ -187,8 +192,20 @@ export class LockService {
       return this._latestMasterId;
     }
 
-    const processes = await this._getProcessIds();
-    this._latestMasterId = Math.min(...processes);
+    const processes = await this._getProcesses();
+
+    let masterProcess: ProcessDescription | null = maxBy(processes, 'pm2_env.pm_uptime');
+    if (!masterProcess) {
+      this._logger?.debug(`Cannot select master process by "pm2_env.pm_uptime" env variable`);
+      this._logger?.debug(`Master process will be selected by the minimal pm_id`);
+      masterProcess = processes[0];
+    }
+
+    if (!masterProcess) {
+      throw new MasterNotFound();
+    }
+
+    this._latestMasterId = masterProcess?.pm_id;
     return this._latestMasterId;
   }
 
@@ -312,7 +329,7 @@ export class LockService {
     );
 
     this._logger?.debug(`Statuses of processes with same name "${statuses.join(',')}"`);
-    return processes.filter((_, i) => statuses[i]);
+    return processes.filter((_, i) => statuses[i]).sort((a, b) => a.pm_id! - b.pm_id!);
   }
 
   private async _getProcessIds(): Promise<number[]> {

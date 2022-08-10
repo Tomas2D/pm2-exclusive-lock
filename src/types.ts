@@ -28,3 +28,15 @@ export interface IConfig {
   syncTimeout?: number;
   groupId?: string;
 }
+
+export type Literal = number | string | boolean | null | undefined;
+
+export type GetObjectKeys<T, L extends string = ''> = T extends Record<string, unknown>
+  ? {
+      [K in keyof T]: T[K] extends Literal
+        ? `${L}${K & string}`
+        : Required<T[K]> extends Record<string, unknown>
+        ? GetObjectKeys<Required<T[K]>, `${L}${K & string}.`>
+        : never;
+    }[keyof T]
+  : never;

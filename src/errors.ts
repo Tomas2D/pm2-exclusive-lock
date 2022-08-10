@@ -21,3 +21,9 @@ export class SessionDestroyedError extends Error {
     super(message);
   }
 }
+
+export class MasterNotFound extends Error {
+  constructor(message = 'Master instance cannot be detected') {
+    super(message);
+  }
+}
