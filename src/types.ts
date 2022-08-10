@@ -25,5 +25,6 @@ export interface ILogger {
 export interface IConfig {
   logger?: ILogger;
   lockTimeout?: number;
+  syncTimeout?: number;
   groupId?: string;
 }

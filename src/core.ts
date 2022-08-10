@@ -20,11 +20,18 @@ export class LockService {
 
   private readonly _groupId: string;
   private readonly _lockTimeout: number;
+  private readonly _syncTimeout: number;
   private readonly _logger?: ILogger;
 
-  constructor({ logger, lockTimeout = 5 * 60 * 1000, groupId }: IConfig = {}) {
+  constructor({
+    logger,
+    lockTimeout = 5 * 60 * 1000,
+    syncTimeout = 1.5 * 1000,
+    groupId,
+  }: IConfig = {}) {
     this._logger = logger;
     this._lockTimeout = lockTimeout;
+    this._syncTimeout = syncTimeout;
     this._groupId = groupId || 'DEFAULT';
 
     this._init().catch(noop);
@@ -288,7 +295,7 @@ export class LockService {
 
     return Promise.all([
       responseMessage,
-      withTimeout(() => this._sendMessage(LOCK_MSG_ACTION.PING, [processId]), 1500)(),
+      withTimeout(() => this._sendMessage(LOCK_MSG_ACTION.PING, [processId]), this._syncTimeout)(),
     ])
       .then(() => true)
       .catch(() => false)

@@ -49,6 +49,7 @@ import { LockService } from 'pm2-exclusive-lock'
 const lockService = new LockService({
   groupId: 'FS_LOCK',
   lockTimeout: 10 * 1000, // 10 seconds,
+  syncTimeout: 1.5 * 1000, // 1.5 seconds,
   logger: {
     debug: console.debug,
     warn: console.warn,
