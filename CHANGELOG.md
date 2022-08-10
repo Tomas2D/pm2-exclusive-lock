@@ -1,5 +1,21 @@
 # Changelog
 
+<a name="1.2.0"></a>
+## 1.2.0 (2022-08-10)
+
+### Added
+
+- ✨ Select master instance by longest uptime and not pm_id [[93c287f](https://github.com/Tomas2D/pm2-exclusive-lock/commit/93c287fd5c2b36d574abd20d589ae6fe8192f02f)]
+- ✨ Add sync timeout option to config [[c2a5522](https://github.com/Tomas2D/pm2-exclusive-lock/commit/c2a552238e2d4e21f461887060fc9eee9b445291)]
+
+### Miscellaneous
+
+-  Merge branch &#x27;main&#x27; of github.com:Tomas2D/pm2-exclusive-lock into main [[8ad2a9a](https://github.com/Tomas2D/pm2-exclusive-lock/commit/8ad2a9aceddb0c9cce2a19901c48f6cb771e5b3a)]
+-  Merge pull request [#8](https://github.com/Tomas2D/pm2-exclusive-lock/issues/8) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-5.33.0 [[cb7abb4](https://github.com/Tomas2D/pm2-exclusive-lock/commit/cb7abb49a408e5451cd6c978b915b95cc30997e4)]
+-  Bump @typescript-eslint/eslint-plugin from 5.32.0 to 5.33.0 [[a73e22b](https://github.com/Tomas2D/pm2-exclusive-lock/commit/a73e22b22c109d4ec05004f6f3be2d272b1d623b)]
+- 📝 Add groupId configuration property to README [[40d6685](https://github.com/Tomas2D/pm2-exclusive-lock/commit/40d668573609aa9f414163826049cfbe11b46db7)]
+
+
 <a name="1.1.0"></a>
 ## 1.1.0 (2022-08-07)
 
