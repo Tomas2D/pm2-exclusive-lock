@@ -291,7 +291,10 @@ export class LockService {
             },
             (err: Error) => {
               if (err) {
-                this._logger?.error(`Error when sending a message to a process`, err);
+                this._logger?.error(
+                  `Error when sending a message to a process with id "${instanceId}"`,
+                  err,
+                );
               }
               resolve({ instanceId, hasError: Boolean(err) });
             },
