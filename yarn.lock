@@ -1650,9 +1650,9 @@ pm2-deploy@~1.0.2:
     tv4 "^1.3.0"
 
 pm2-master-process@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/pm2-master-process/-/pm2-master-process-1.3.0.tgz#e6104035924bf0a1fc2dcee011d26099453e78b2"
-  integrity sha512-oy++u+pPUtp3yOCBPHrEHzdJdfLWohbrvhSCSmIZAw5phQeZRsAxh6dTApniyuf7L0gTLw5F9qpGdZljXtXjAg==
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/pm2-master-process/-/pm2-master-process-1.3.2.tgz#162b7550081885a2b63feee47dffe57cd6c9e2ac"
+  integrity sha512-ze/rji9L2G4gtjFTyWZmzQxFv6cti/dofEmTmaeOL0mUSZ0oVoDMzJNqaHT+8NDgYIRUu+9o2+ibENnEAYctlQ==
 
 pm2-multimeter@^0.1.2:
   version "0.1.2"
