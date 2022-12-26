@@ -1763,9 +1763,9 @@ prettier@^2.7.1:
   integrity sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==
 
 promise-based-task@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/promise-based-task/-/promise-based-task-1.3.2.tgz#a8445a2dcea85463a9890d2f6d3a113cd1204657"
-  integrity sha512-rA3r7w7cSDij7Pq8kwaavgaPyHQOSqudD9N8/xnqXHS3afkYy7qAIKL+D6lrPQHPDgpRrZX5OAPtJAGqgHBCJw==
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/promise-based-task/-/promise-based-task-1.4.0.tgz#f5bd33525db798e53db68a4e7d42b498932e5902"
+  integrity sha512-wCms2gtQJ/pIlbqNSDgWkL46rZIAiQRkcZItkaibcSt249zArgYaTY91wQK6e41lsZpwrPS5Zm+nZmOOvSnyoQ==
 
 promise-queue@^2.2.5:
   version "2.2.5"
