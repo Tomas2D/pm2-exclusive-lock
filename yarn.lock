@@ -1687,10 +1687,10 @@ pm2-deploy@~1.0.2:
     run-series "^1.1.8"
     tv4 "^1.3.0"
 
-pm2-master-process@^1.3.0:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/pm2-master-process/-/pm2-master-process-1.3.2.tgz#162b7550081885a2b63feee47dffe57cd6c9e2ac"
-  integrity sha512-ze/rji9L2G4gtjFTyWZmzQxFv6cti/dofEmTmaeOL0mUSZ0oVoDMzJNqaHT+8NDgYIRUu+9o2+ibENnEAYctlQ==
+pm2-master-process@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/pm2-master-process/-/pm2-master-process-2.0.0.tgz#4404874dff68e64cb5272271bc6a476bb156b6f4"
+  integrity sha512-wIOfqMb9HwgsQ88Ekh4hwK09oR/A4cSvo+WCvSZO/sz36jkgito20ui0zcXCzFTSuLYfaqUUgAAPzJa6LmlQmQ==
 
 pm2-multimeter@^0.1.2:
   version "0.1.2"
@@ -1762,10 +1762,10 @@ prettier@^2.7.1:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.1.tgz#4e1fd11c34e2421bc1da9aea9bd8127cd0a35efc"
   integrity sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==
 
-promise-based-task@^1.3.2:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/promise-based-task/-/promise-based-task-1.4.0.tgz#f5bd33525db798e53db68a4e7d42b498932e5902"
-  integrity sha512-wCms2gtQJ/pIlbqNSDgWkL46rZIAiQRkcZItkaibcSt249zArgYaTY91wQK6e41lsZpwrPS5Zm+nZmOOvSnyoQ==
+promise-based-task@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/promise-based-task/-/promise-based-task-2.0.3.tgz#73ee2806804c69e09571e5bdb0dc121715e0e9c7"
+  integrity sha512-EnnWPn7Zvb1FjXajQ3qaj0ry5sGb44nVwitegvrygjYaMhQfz2hvjRoigy+1PgMNuOfzjQM8EowaHeQEMAD+hA==
 
 promise-queue@^2.2.5:
   version "2.2.5"
@@ -2208,7 +2208,7 @@ type-fest@^0.21.3:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.21.3.tgz#d260a24b0198436e133fa26a524a6d65fa3b2e37"
   integrity sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==
 
-typescript@^4.7.4:
+typescript@^4.9.4:
   version "4.9.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
   integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==

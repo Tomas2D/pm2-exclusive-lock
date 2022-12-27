@@ -1,6 +1,6 @@
 import pm2 from 'pm2';
 import type { ProcessDescription } from 'pm2';
-import { getCurrentProcessId, getInstances } from 'pm2-master-process';
+import { getCurrentProcessId, getProcesses } from 'pm2-master-process';
 import PromiseQueue from 'promise-queue';
 import { Task } from 'promise-based-task';
 import { maxBy, noop, withTimeout } from './helpers';
@@ -323,7 +323,7 @@ export class LockService {
   }
 
   private async _getProcesses(): Promise<ProcessDescription[]> {
-    const processes: ProcessDescription[] = await getInstances({
+    const processes: ProcessDescription[] = await getProcesses({
       instanceStatus: ['online'],
     });
 
