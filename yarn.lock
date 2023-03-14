@@ -156,9 +156,9 @@
   integrity sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==
 
 "@types/node@^16.11.4":
-  version "16.18.13"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.13.tgz#c572f8837094c6e3b73918a68674c784f6877fc0"
-  integrity sha512-l0/3XZ153UTlNOnZK8xSNoJlQda9/WnYgiTdcKKPJSZjdjI9MU+A9oMXOesAWLSnqAaaJhj3qfQsU07Dr8OUwg==
+  version "16.18.15"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.15.tgz#260fbad5f819744c63467b429b3ca00894f3c72c"
+  integrity sha512-a5RBe4vw4bFITL6351US4glblsc0m7JKfm9RpSl9f/rSAXmZmulIEzk7fvpWFr14iJCvKxV7sQUqI0bwee0iVw==
 
 "@types/promise-queue@^2.2.0":
   version "2.2.0"
