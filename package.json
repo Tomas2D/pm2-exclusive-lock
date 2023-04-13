@@ -7,7 +7,7 @@
     "pm2 cluster lock",
     "pm2 acquire lock"
   ],
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
