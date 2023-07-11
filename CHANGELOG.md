@@ -1,5 +1,70 @@
 # Changelog
 
+<a name="1.3.0"></a>
+## 1.3.0 (2023-07-11)
+
+### Added
+
+- ✨ Add support for ignoring the lock acquiring error [[ad639a5](https://github.com/Tomas2D/pm2-exclusive-lock/commit/ad639a5b9036e3a8f068f908e0884d0a935982af)]
+
+### Miscellaneous
+
+-  Merge pull request [#224](https://github.com/Tomas2D/pm2-exclusive-lock/issues/224) from Tomas2D/dependabot/npm_and_yarn/semver-5.7.2 [[964e6fe](https://github.com/Tomas2D/pm2-exclusive-lock/commit/964e6fe362f267709ce08c25a01e3f001eb6f309)]
+-  Merge pull request [#223](https://github.com/Tomas2D/pm2-exclusive-lock/issues/223) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-5.62.0 [[df407fe](https://github.com/Tomas2D/pm2-exclusive-lock/commit/df407feaa5997dee431d0d54101541f466b58da8)]
+-  Bump semver from 5.7.1 to 5.7.2 [[cd00580](https://github.com/Tomas2D/pm2-exclusive-lock/commit/cd005808a251fa72bf21705c5fb4be010d10d55f)]
+-  Bump @typescript-eslint/eslint-plugin from 5.61.0 to 5.62.0 [[c040907](https://github.com/Tomas2D/pm2-exclusive-lock/commit/c040907e49357c1030428c48efd89a4100845b47)]
+-  Merge pull request [#221](https://github.com/Tomas2D/pm2-exclusive-lock/issues/221) from Tomas2D/dependabot/npm_and_yarn/types/node-20.4.1 [[a926433](https://github.com/Tomas2D/pm2-exclusive-lock/commit/a926433cf49727a794649b6fa47020f156f44d31)]
+-  Bump @types/node from 20.4.0 to 20.4.1 [[46c5a35](https://github.com/Tomas2D/pm2-exclusive-lock/commit/46c5a35acdb29a0abcaa6089954f0293fdc3efcc)]
+-  Merge pull request [#219](https://github.com/Tomas2D/pm2-exclusive-lock/issues/219) from Tomas2D/dependabot/npm_and_yarn/types/node-20.4.0 [[64afd60](https://github.com/Tomas2D/pm2-exclusive-lock/commit/64afd60b5cf66dd79f19cf7f54e129acbaeb9f11)]
+-  Merge pull request [#220](https://github.com/Tomas2D/pm2-exclusive-lock/issues/220) from Tomas2D/dependabot/npm_and_yarn/prettier-3.0.0 [[7863feb](https://github.com/Tomas2D/pm2-exclusive-lock/commit/7863feb89a8155e01962065aadf80368a00ecfdb)]
+-  Bump prettier from 2.8.8 to 3.0.0 [[1b5a780](https://github.com/Tomas2D/pm2-exclusive-lock/commit/1b5a780e60c832454ada290a03a7b8ceb258dc52)]
+-  Bump @types/node from 20.3.3 to 20.4.0 [[7a1811f](https://github.com/Tomas2D/pm2-exclusive-lock/commit/7a1811ff315333e44a2c4d659fd040075c340a2b)]
+-  Merge pull request [#217](https://github.com/Tomas2D/pm2-exclusive-lock/issues/217) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-5.61.0 [[343a0c4](https://github.com/Tomas2D/pm2-exclusive-lock/commit/343a0c4cf10651c14cb78c99414ada498d2b64dc)]
+-  Merge pull request [#218](https://github.com/Tomas2D/pm2-exclusive-lock/issues/218) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/parser-5.61.0 [[1204c6c](https://github.com/Tomas2D/pm2-exclusive-lock/commit/1204c6c380784d22205949b8bd96913b8d633451)]
+-  Bump @typescript-eslint/eslint-plugin from 5.60.1 to 5.61.0 [[ac1112e](https://github.com/Tomas2D/pm2-exclusive-lock/commit/ac1112ef37f27e94fba3132f94950a591ab48c3b)]
+-  Bump @typescript-eslint/parser from 5.60.1 to 5.61.0 [[2c83464](https://github.com/Tomas2D/pm2-exclusive-lock/commit/2c83464c916ceb045750880c36ec1321aff89490)]
+-  Merge pull request [#215](https://github.com/Tomas2D/pm2-exclusive-lock/issues/215) from Tomas2D/dependabot/npm_and_yarn/eslint-8.44.0 [[b0c460f](https://github.com/Tomas2D/pm2-exclusive-lock/commit/b0c460f4104bb962df63f89b0b02bf48ffd268a6)]
+-  Merge pull request [#216](https://github.com/Tomas2D/pm2-exclusive-lock/issues/216) from Tomas2D/dependabot/npm_and_yarn/types/node-20.3.3 [[be16ba0](https://github.com/Tomas2D/pm2-exclusive-lock/commit/be16ba07c193747c2fa5a79d4243a42d8b815fac)]
+-  Bump @types/node from 20.3.2 to 20.3.3 [[14ef4b2](https://github.com/Tomas2D/pm2-exclusive-lock/commit/14ef4b2df1cae4172edd39112f6e67bde57274eb)]
+-  Bump eslint from 8.43.0 to 8.44.0 [[062e35f](https://github.com/Tomas2D/pm2-exclusive-lock/commit/062e35fe2001254798636bd2648a3f38fcde5891)]
+-  Merge pull request [#212](https://github.com/Tomas2D/pm2-exclusive-lock/issues/212) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/parser-5.60.1 [[50a42bd](https://github.com/Tomas2D/pm2-exclusive-lock/commit/50a42bdaedab4d64d7fe5923280c8fb4a923d95d)]
+-  Merge pull request [#211](https://github.com/Tomas2D/pm2-exclusive-lock/issues/211) from Tomas2D/dependabot/npm_and_yarn/lint-staged-13.2.3 [[bec37c1](https://github.com/Tomas2D/pm2-exclusive-lock/commit/bec37c14ff3265c9dbb4b1c4d7e321622d2259cc)]
+-  Merge pull request [#213](https://github.com/Tomas2D/pm2-exclusive-lock/issues/213) from Tomas2D/dependabot/npm_and_yarn/typescript-5.1.6 [[ff96cfd](https://github.com/Tomas2D/pm2-exclusive-lock/commit/ff96cfd125f0f8963694952f412e3a7bdb2003e9)]
+-  Merge pull request [#214](https://github.com/Tomas2D/pm2-exclusive-lock/issues/214) from Tomas2D/dependabot/npm_and_yarn/eslint-8.43.0 [[d0e027b](https://github.com/Tomas2D/pm2-exclusive-lock/commit/d0e027b02bf605efad8642c28ca23a0094e42fa1)]
+-  Bump eslint from 8.41.0 to 8.43.0 [[9292be6](https://github.com/Tomas2D/pm2-exclusive-lock/commit/9292be61d06a7653541266b1f42bde4f070b757e)]
+-  Bump typescript from 5.0.4 to 5.1.6 [[dd4e8f3](https://github.com/Tomas2D/pm2-exclusive-lock/commit/dd4e8f3b28841ef67daa36077521cbf39e8294a3)]
+-  Bump @typescript-eslint/parser from 5.59.5 to 5.60.1 [[c12e637](https://github.com/Tomas2D/pm2-exclusive-lock/commit/c12e637d5e54e9d044017806d92f956a513dea8c)]
+-  Merge pull request [#194](https://github.com/Tomas2D/pm2-exclusive-lock/issues/194) from Tomas2D/dependabot/npm_and_yarn/vm2-3.9.19 [[c9a0a68](https://github.com/Tomas2D/pm2-exclusive-lock/commit/c9a0a6859eab086c1d4c487f9c7e928d1712e560)]
+-  Merge pull request [#210](https://github.com/Tomas2D/pm2-exclusive-lock/issues/210) from Tomas2D/dependabot/npm_and_yarn/yaml-2.3.1 [[ca18366](https://github.com/Tomas2D/pm2-exclusive-lock/commit/ca18366124eb3a0d59a185336eadc0aa05648b52)]
+-  Merge pull request [#208](https://github.com/Tomas2D/pm2-exclusive-lock/issues/208) from Tomas2D/dependabot/npm_and_yarn/types/node-20.3.2 [[7c7ee5b](https://github.com/Tomas2D/pm2-exclusive-lock/commit/7c7ee5b7f0d8905e13b152337b546eef96fb82f7)]
+-  Merge pull request [#209](https://github.com/Tomas2D/pm2-exclusive-lock/issues/209) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-5.60.1 [[62f8e94](https://github.com/Tomas2D/pm2-exclusive-lock/commit/62f8e941f7620d4c3944627ae0f0796ae6c50696)]
+-  Bump lint-staged from 13.2.1 to 13.2.3 [[013ce92](https://github.com/Tomas2D/pm2-exclusive-lock/commit/013ce92e4d7ea565dd239ed59db3c1b45e98aa38)]
+-  Bump yaml from 2.2.1 to 2.3.1 [[bf62345](https://github.com/Tomas2D/pm2-exclusive-lock/commit/bf62345078c004c61a6cc2297cc3a03b71ee6b3b)]
+-  Bump @typescript-eslint/eslint-plugin from 5.59.1 to 5.60.1 [[bd7161e](https://github.com/Tomas2D/pm2-exclusive-lock/commit/bd7161e44e994c40ddb631bcbb80d6036a103251)]
+-  Bump @types/node from 20.1.2 to 20.3.2 [[7ce8e07](https://github.com/Tomas2D/pm2-exclusive-lock/commit/7ce8e071ed74081259a4f45af4bbfb29e6b5890e)]
+-  Merge pull request [#198](https://github.com/Tomas2D/pm2-exclusive-lock/issues/198) from Tomas2D/dependabot/npm_and_yarn/eslint-8.41.0 [[5862f13](https://github.com/Tomas2D/pm2-exclusive-lock/commit/5862f137db4bdf1cde4d1bcf508357796df2a0de)]
+-  Bump eslint from 8.39.0 to 8.41.0 [[f8ea7f3](https://github.com/Tomas2D/pm2-exclusive-lock/commit/f8ea7f3f6059dced91620419d83d1524f5bd397e)]
+-  Bump vm2 from 3.9.17 to 3.9.19 [[3a3cc8e](https://github.com/Tomas2D/pm2-exclusive-lock/commit/3a3cc8e5cc871a46dae0ae87abe9e56e127bb9a5)]
+-  Merge pull request [#186](https://github.com/Tomas2D/pm2-exclusive-lock/issues/186) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/parser-5.59.5 [[91be389](https://github.com/Tomas2D/pm2-exclusive-lock/commit/91be389963a8a4d7940dfb8c2b28e3721bc6e883)]
+-  Merge pull request [#187](https://github.com/Tomas2D/pm2-exclusive-lock/issues/187) from Tomas2D/dependabot/npm_and_yarn/types/node-20.1.2 [[93ae9f8](https://github.com/Tomas2D/pm2-exclusive-lock/commit/93ae9f869a8beca4d103362714b8ed0c5625a6d1)]
+-  Bump @types/node from 16.18.23 to 20.1.2 [[70ad35d](https://github.com/Tomas2D/pm2-exclusive-lock/commit/70ad35dfba0324e7e5ead215d1f5ab0445b20fb3)]
+-  Bump @typescript-eslint/parser from 5.59.1 to 5.59.5 [[41e92be](https://github.com/Tomas2D/pm2-exclusive-lock/commit/41e92be9a1a760ab56496f82c4c4cf9d8bd49af5)]
+-  Merge pull request [#174](https://github.com/Tomas2D/pm2-exclusive-lock/issues/174) from Tomas2D/dependabot/npm_and_yarn/prettier-2.8.8 [[2064383](https://github.com/Tomas2D/pm2-exclusive-lock/commit/20643835fadc791417e46a307bc35fe3b3e6fdd4)]
+-  Merge pull request [#175](https://github.com/Tomas2D/pm2-exclusive-lock/issues/175) from Tomas2D/dependabot/npm_and_yarn/eslint-8.39.0 [[38552ed](https://github.com/Tomas2D/pm2-exclusive-lock/commit/38552ed56029141fa63972cb4d8b59645586a57d)]
+-  Merge pull request [#176](https://github.com/Tomas2D/pm2-exclusive-lock/issues/176) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-5.59.1 [[1affe7a](https://github.com/Tomas2D/pm2-exclusive-lock/commit/1affe7a8e1498003a4eced877e8677e45241075f)]
+-  Merge pull request [#177](https://github.com/Tomas2D/pm2-exclusive-lock/issues/177) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/parser-5.59.1 [[cf17e5c](https://github.com/Tomas2D/pm2-exclusive-lock/commit/cf17e5cfa4d3b8c8ac24d759d69d613fcedc5143)]
+-  Bump eslint from 8.38.0 to 8.39.0 [[fea33b6](https://github.com/Tomas2D/pm2-exclusive-lock/commit/fea33b6c8a969816d3e85330ad68dd8d9aefef0d)]
+-  Bump @typescript-eslint/eslint-plugin from 5.59.0 to 5.59.1 [[3793c5e](https://github.com/Tomas2D/pm2-exclusive-lock/commit/3793c5e68f58c22ccfebf3f0f2c3a165e6b9cadf)]
+-  Bump @typescript-eslint/parser from 5.59.0 to 5.59.1 [[c388218](https://github.com/Tomas2D/pm2-exclusive-lock/commit/c38821859e2573d8a654cc33682472c5e521c942)]
+-  Bump prettier from 2.8.7 to 2.8.8 [[e92a67c](https://github.com/Tomas2D/pm2-exclusive-lock/commit/e92a67c8d39386ffd3e582b2a12856365196c06d)]
+-  Merge pull request [#173](https://github.com/Tomas2D/pm2-exclusive-lock/issues/173) from Tomas2D/dependabot/npm_and_yarn/vm2-3.9.17 [[b3d1a22](https://github.com/Tomas2D/pm2-exclusive-lock/commit/b3d1a225ee3d24654ec9112caef15d8589fdbc6e)]
+-  Bump vm2 from 3.9.16 to 3.9.17 [[902cb44](https://github.com/Tomas2D/pm2-exclusive-lock/commit/902cb44100b6f578239375b108cd09de4a43ce5f)]
+-  Merge pull request [#171](https://github.com/Tomas2D/pm2-exclusive-lock/issues/171) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/parser-5.59.0 [[ec877c0](https://github.com/Tomas2D/pm2-exclusive-lock/commit/ec877c0db02599b36e4c7b811656dc409b4da9f5)]
+-  Merge pull request [#170](https://github.com/Tomas2D/pm2-exclusive-lock/issues/170) from Tomas2D/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-5.59.0 [[5a93e29](https://github.com/Tomas2D/pm2-exclusive-lock/commit/5a93e2945c142b87ab5b3c5e34530111ecc57057)]
+-  Bump @typescript-eslint/parser from 5.58.0 to 5.59.0 [[423a7f0](https://github.com/Tomas2D/pm2-exclusive-lock/commit/423a7f0fe193df723447431cc38542d30a64dccd)]
+-  Bump @typescript-eslint/eslint-plugin from 5.58.0 to 5.59.0 [[8326330](https://github.com/Tomas2D/pm2-exclusive-lock/commit/83263301eef58ef41a06054b5e1db86cb173d1a6)]
+
+
 <a name="1.2.2"></a>
 ## 1.2.2 (2023-04-13)
 
