@@ -6,6 +6,10 @@ export const noop = () => {
 };
 
 export function withTimeout<P extends unknown[], R>(fn: (...args: P) => R, ms: number) {
+  if (ms === Infinity) {
+    return fn;
+  }
+
   return async (...args: P): Promise<Awaited<R>> => {
     let timeoutId: NodeJS.Timeout;
 

@@ -16,6 +16,11 @@ export enum LOCK_MSG_ACTION {
   REQ_UNLOCK = 'REQ_UNLOCK',
 }
 
+export enum LOCK_ERROR_RESOLUTION {
+  IGNORE = 'IGNORE',
+  THROW = 'THROW',
+}
+
 export interface ILogger {
   debug: (msg: string) => void;
   warn: (msg: string) => void;
@@ -25,6 +30,7 @@ export interface ILogger {
 export interface IConfig {
   logger?: ILogger;
   lockTimeout?: number;
+  lockErrorResolution?: LOCK_ERROR_RESOLUTION;
   syncTimeout?: number;
   groupId?: string;
 }

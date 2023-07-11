@@ -1,5 +1,5 @@
-import pm2 from 'pm2';
 import type { ProcessDescription } from 'pm2';
+import pm2 from 'pm2';
 import { getCurrentProcessId, getProcesses } from 'pm2-master-process';
 import PromiseQueue from 'promise-queue';
 import { Task } from 'promise-based-task';
@@ -11,7 +11,7 @@ import {
   SessionDestroyedError,
 } from './errors';
 import type { IConfig, ILockMessage, ILogger } from './types';
-import { LOCK_MSG_ACTION } from './types';
+import { LOCK_MSG_ACTION, LOCK_ERROR_RESOLUTION } from './types';
 
 export class LockService {
   private readonly _localQueue = new PromiseQueue(1, Infinity);
@@ -25,18 +25,21 @@ export class LockService {
 
   private readonly _groupId: string;
   private readonly _lockTimeout: number;
+  private readonly _lockErrorResolution: LOCK_ERROR_RESOLUTION;
   private readonly _syncTimeout: number;
   private readonly _logger?: ILogger;
 
   constructor({
     logger,
     lockTimeout = 5 * 60 * 1000,
+    lockErrorResolution = LOCK_ERROR_RESOLUTION.THROW,
     syncTimeout = 1.5 * 1000,
     groupId,
   }: IConfig = {}) {
     this._logger = logger;
-    this._lockTimeout = lockTimeout;
-    this._syncTimeout = syncTimeout;
+    this._lockErrorResolution = lockErrorResolution;
+    this._lockTimeout = Math.min(lockTimeout, Infinity);
+    this._syncTimeout = Math.min(syncTimeout, Infinity);
     this._groupId = groupId || 'DEFAULT';
 
     this._init().catch(noop);
@@ -50,20 +53,16 @@ export class LockService {
       return fn();
     }
 
-    const timeout = 360 * 1000;
+    return this._localQueue.add(async () => {
+      this._logger?.debug(`Request for lock...`);
+      await this._retrieveLock();
+      this._logger?.debug(`-> lock retrieved`);
 
-    return this._localQueue.add(
-      withTimeout(async () => {
-        this._logger?.debug(`Request for lock...`);
-        await this._retrieveLock();
-        this._logger?.debug(`-> lock retrieved`);
-
-        return fn().finally(async () => {
-          await this._sendUnlock();
-          this._logger?.debug(`-> unlock`);
-        });
-      }, timeout),
-    );
+      return fn().finally(async () => {
+        await this._sendUnlock();
+        this._logger?.debug(`-> unlock`);
+      });
+    });
   }
 
   async getLockStatuses() {
@@ -250,17 +249,30 @@ export class LockService {
     const { task: waitAck, cancelWaitForMessage } = this._waitForMessage(
       LOCK_MSG_ACTION.REQ_LOCK_ACK,
     );
-    const receivers = await this._sendMessage(LOCK_MSG_ACTION.REQ_LOCK);
 
-    if (receivers.length === 0) {
+    try {
+      await withTimeout(async () => {
+        const receivers = await this._sendMessage(LOCK_MSG_ACTION.REQ_LOCK);
+        if (receivers.length === 0) {
+          return;
+        }
+
+        if (receivers.every((status) => status.hasError)) {
+          throw new LockCommunicationError();
+        }
+
+        return Promise.race([waitAck, this._isMasterDestroyed]);
+      }, this._lockTimeout)();
+    } catch (e) {
+      this?._logger?.error(`Failed to obtain the lock`, e);
+      if (this._lockErrorResolution === LOCK_ERROR_RESOLUTION.IGNORE) {
+        this?._logger?.debug(`-> ignoring the lock error, behaving as if we have obtained the lock.`);
+      } else {
+        throw e;
+      }
+    } finally {
       cancelWaitForMessage();
-      return;
-    } else if (receivers.every((status) => status.hasError)) {
-      cancelWaitForMessage();
-      throw new LockCommunicationError();
     }
-
-    return Promise.race([waitAck, this._isMasterDestroyed]).finally(cancelWaitForMessage);
   }
 
   private async _sendUnlock(): Promise<void> {

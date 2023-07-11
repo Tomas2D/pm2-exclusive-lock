@@ -43,13 +43,15 @@ lockService.destroy()
 ```
 
 **With custom configuration**
+
 ```typescript
-import { LockService } from 'pm2-exclusive-lock'
+import { LockService, LOCK_ERROR_RESOLUTION } from 'pm2-exclusive-lock'
 
 const lockService = new LockService({
   groupId: 'FS_LOCK',
   lockTimeout: 10 * 1000, // 10 seconds,
   syncTimeout: 1.5 * 1000, // 1.5 seconds,
+  lockErrorResolution: LOCK_ERROR_RESOLUTION.THROW, // or LOCK_ERROR_RESOLUTION.IGNORE 
   logger: {
     debug: console.debug,
     warn: console.warn,
@@ -72,6 +74,8 @@ lockService.destroy()
 interface IConfig {
   logger?: ILogger;
   lockTimeout?: number; // miliseconds
+  lockTimeoutResolution?: LOCK_TIMEOUT_RESOLUTION;  // 'THROW' or 'IGNORE'
+  syncTimeout?: number; // miliseconds
   groupId?: string; // name of lock group
 }
 
@@ -84,6 +88,5 @@ interface ILogger {
 
 ## TODO
 
-- [ ] Make every instance unique 🔥
 - [ ] Add tests
 - [ ] Describe how locking works
