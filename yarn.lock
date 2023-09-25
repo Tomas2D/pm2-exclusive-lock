@@ -178,9 +178,9 @@
   integrity sha512-2qGq5LAOTh9izcc0+F+dToFigBWiK1phKPt7rNhOqJSr35y8rlIBjDwGtFSgAI6MGIhjwOVNSQZVdJsZJ2uR1w==
 
 "@types/promise-queue@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@types/promise-queue/-/promise-queue-2.2.0.tgz#cdba35f1b2c0bd8aa2bf925c2b1ed02958067a0a"
-  integrity sha512-9QLtid6GxEWqpF+QImxBRG6bSVOHtpAm2kXuIyEvZBbSOupLvqhhJv8uaHbS8kUL8FDjzH3RWcSyC/52WOVtGw==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@types/promise-queue/-/promise-queue-2.2.1.tgz#6cc75f1b6cdd66d42b418fc1247da2484c247d8d"
+  integrity sha512-jEx3I04+fyXdya5Ex6TxgYG6aQrZ5g0lddMIF3MjWWXwKksvjjDRVLCuITtAYtzGP+Ha0nla4QZzAsDjFVN00g==
 
 "@types/semver@^7.3.12":
   version "7.3.12"
