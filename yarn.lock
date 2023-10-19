@@ -180,9 +180,9 @@
     undici-types "~5.25.1"
 
 "@types/promise-queue@^2.2.0":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@types/promise-queue/-/promise-queue-2.2.1.tgz#6cc75f1b6cdd66d42b418fc1247da2484c247d8d"
-  integrity sha512-jEx3I04+fyXdya5Ex6TxgYG6aQrZ5g0lddMIF3MjWWXwKksvjjDRVLCuITtAYtzGP+Ha0nla4QZzAsDjFVN00g==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@types/promise-queue/-/promise-queue-2.2.2.tgz#77c4ba7e8939e8cabbeaf767d190d5e86f01a4ea"
+  integrity sha512-SFLA8/UdR5eGtrP5f6KkLZS9meOMcLOu0kIzMbIU2ITDMkiEG2k0fQtCDbV4nZldRjCKA7n9WLN3tktlepmWtg==
 
 "@types/semver@^7.3.12":
   version "7.3.12"
