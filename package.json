@@ -47,7 +47,7 @@
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^10.1.1",
     "husky": "^8.0.1",
-    "lint-staged": "^14.0.1",
+    "lint-staged": "^15.0.1",
     "pm2": "^6.0.5",
     "pm2-master-process": "^2.0.0",
     "prettier": "^3.0.0",
