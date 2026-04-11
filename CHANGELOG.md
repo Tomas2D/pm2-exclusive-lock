@@ -1,5 +1,23 @@
 # Changelog
 
+<a name="1.2.4"></a>
+## 1.2.4 (2026-04-11)
+
+### Fixed
+
+- Fix permanent deadlock when lock holder crashes (SIGKILL/OOM) — added hold timeout and master-side holder liveness checking
+- Fix permanent deadlock when master crashes without sending DISCONNECT — added periodic master health checks
+- Fix `_getMasterInstanceId` cache logic where operator precedence bug caused the condition to always evaluate true
+- Fix PONG message mismatch in `_validateProcess` by filtering on source process ID
+- Fix `_validateProcess` timeout to cover the full PING/PONG round trip instead of only the PING send
+- Replace silent `.catch(noop)` on global queue handler with error logging
+
+### Added
+
+- `holdTimeout` config option — maximum time to wait for lock release in the global queue
+- `masterHealthCheckInterval` config option — how often to ping the master process
+- `LockHoldTimeoutError` error class to distinguish holder death from acquisition failure
+
 <a name="1.3.1"></a>
 ## 1.3.1 (2023-11-06)
 
