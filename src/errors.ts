@@ -22,6 +22,12 @@ export class SessionDestroyedError extends Error {
   }
 }
 
+export class LockHoldTimeoutError extends Error {
+  constructor(message = 'Lock hold period exceeded maximum timeout — holder may have crashed') {
+    super(message);
+  }
+}
+
 export class MasterNotFound extends Error {
   constructor(message = 'Master instance cannot be detected') {
     super(message);

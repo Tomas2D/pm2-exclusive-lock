@@ -6,6 +6,7 @@ import { Task } from 'promise-based-task';
 import { maxBy, noop, withTimeout } from './helpers';
 import {
   LockCommunicationError,
+  LockHoldTimeoutError,
   LockMasterError,
   MasterNotFound,
   SessionDestroyedError,
@@ -25,21 +26,29 @@ export class LockService {
 
   private readonly _groupId: string;
   private readonly _lockTimeout: number;
+  private readonly _holdTimeout: number;
   private readonly _lockErrorResolution: LOCK_ERROR_RESOLUTION;
   private readonly _syncTimeout: number;
+  private readonly _masterHealthCheckInterval: number;
   private readonly _logger?: ILogger;
+
+  private _masterHealthCheckTimer?: NodeJS.Timeout;
 
   constructor({
     logger,
     lockTimeout = 5 * 60 * 1000,
+    holdTimeout,
     lockErrorResolution = LOCK_ERROR_RESOLUTION.THROW,
     syncTimeout = 1.5 * 1000,
+    masterHealthCheckInterval = 10_000,
     groupId,
   }: IConfig = {}) {
     this._logger = logger;
     this._lockErrorResolution = lockErrorResolution;
     this._lockTimeout = Math.min(lockTimeout, Infinity);
+    this._holdTimeout = Math.min(holdTimeout ?? lockTimeout, Infinity);
     this._syncTimeout = Math.min(syncTimeout, Infinity);
+    this._masterHealthCheckInterval = masterHealthCheckInterval;
     this._groupId = groupId || 'DEFAULT';
 
     this._init().catch(noop);
@@ -122,6 +131,8 @@ export class LockService {
 
             const { task, cancelWaitForMessage } = this._waitForMessage(LOCK_MSG_ACTION.REQ_UNLOCK);
 
+            let holderCheckInterval: NodeJS.Timeout | undefined;
+
             if (isMaster) {
               const [{ hasError }] = await this._sendMessage(LOCK_MSG_ACTION.REQ_LOCK_ACK, [
                 message.processId,
@@ -131,11 +142,54 @@ export class LockService {
                 this._logger?.debug(`Cannot send message to ${message.processId}, skipping`);
                 return;
               }
+
+              // Periodically check if the lock holder is still alive (master only).
+              // Require 2 consecutive failures to guard against transient unresponsiveness.
+              let failureCount = 0;
+              holderCheckInterval = setInterval(async () => {
+                const isAlive = await this._validateProcess(message.processId);
+                if (!isAlive) {
+                  failureCount++;
+                  if (failureCount >= 2) {
+                    this._logger?.warn(
+                      `Lock holder process ${message.processId} appears dead after ${failureCount} consecutive failed checks, forcing unlock`,
+                    );
+                    clearInterval(holderCheckInterval!);
+                    holderCheckInterval = undefined;
+                    await this._sendMessage(LOCK_MSG_ACTION.REQ_UNLOCK);
+                  }
+                } else {
+                  failureCount = 0;
+                }
+              }, this._syncTimeout * 3);
+              if (holderCheckInterval.unref) {
+                holderCheckInterval.unref();
+              }
             }
 
-            await Promise.race([this._isMasterDestroyed, task]).finally(cancelWaitForMessage);
+            // Hold timeout — hard ceiling that guarantees the queue frees
+            // even if the holder crashes and liveness checks fail.
+            let holdTimeoutId: NodeJS.Timeout | undefined;
+            const holdTimeout =
+              this._holdTimeout < Infinity
+                ? new Promise<never>((_, reject) => {
+                    holdTimeoutId = setTimeout(
+                      () => reject(new LockHoldTimeoutError()),
+                      this._holdTimeout,
+                    );
+                    if (holdTimeoutId.unref) holdTimeoutId.unref();
+                  })
+                : new Promise<never>(noop);
+
+            await Promise.race([this._isMasterDestroyed, task, holdTimeout]).finally(() => {
+              cancelWaitForMessage();
+              if (holdTimeoutId) clearTimeout(holdTimeoutId);
+              if (holderCheckInterval) clearInterval(holderCheckInterval);
+            });
           })
-          .catch(noop);
+          .catch((err) => {
+            this._logger?.error('Global queue handler failed', err);
+          });
         return;
       }
     };
@@ -153,6 +207,7 @@ export class LockService {
         if (this._isInitialed) {
           this._isInitialed.resolve();
         }
+        this._startMasterHealthCheck();
       }
     });
 
@@ -176,6 +231,7 @@ export class LockService {
       return this._isDestroyed;
     }
 
+    this._stopMasterHealthCheck();
     if (curId === this._latestMasterId) {
       this._invalidateMaster();
     }
@@ -187,7 +243,7 @@ export class LockService {
   }
 
   private async _getMasterInstanceId(cache = true) {
-    if (cache && !this._latestMasterId !== undefined) {
+    if (cache && this._latestMasterId !== undefined) {
       return this._latestMasterId;
     }
 
@@ -218,6 +274,33 @@ export class LockService {
     this._latestMasterId = undefined;
     this._isMasterDestroyed.reject(new LockMasterError());
     this._isMasterDestroyed = new Task<never>();
+  }
+
+  private _startMasterHealthCheck() {
+    this._stopMasterHealthCheck();
+    this._masterHealthCheckTimer = setInterval(async () => {
+      const masterId = this._latestMasterId;
+      if (masterId === undefined || masterId === getCurrentProcessId()) {
+        return;
+      }
+
+      const isAlive = await this._validateProcess(masterId);
+      if (!isAlive) {
+        this._logger?.warn(`Master process ${masterId} appears dead, invalidating`);
+        this._invalidateMaster();
+      }
+    }, this._masterHealthCheckInterval);
+
+    if (this._masterHealthCheckTimer.unref) {
+      this._masterHealthCheckTimer.unref();
+    }
+  }
+
+  private _stopMasterHealthCheck() {
+    if (this._masterHealthCheckTimer) {
+      clearInterval(this._masterHealthCheckTimer);
+      this._masterHealthCheckTimer = undefined;
+    }
   }
 
   private _waitForMessage(type: LOCK_MSG_ACTION, from?: number) {
@@ -266,7 +349,9 @@ export class LockService {
     } catch (e) {
       this?._logger?.error(`Failed to obtain the lock`, e);
       if (this._lockErrorResolution === LOCK_ERROR_RESOLUTION.IGNORE) {
-        this?._logger?.debug(`-> ignoring the lock error, behaving as if we have obtained the lock.`);
+        this?._logger?.debug(
+          `-> ignoring the lock error, behaving as if we have obtained the lock.`,
+        );
       } else {
         throw e;
       }
@@ -323,12 +408,17 @@ export class LockService {
 
     const { task: responseMessage, cancelWaitForMessage } = this._waitForMessage(
       LOCK_MSG_ACTION.PONG,
+      processId,
     );
 
-    return Promise.all([
-      responseMessage,
-      withTimeout(() => this._sendMessage(LOCK_MSG_ACTION.PING, [processId]), this._syncTimeout)(),
-    ])
+    return withTimeout(
+      () =>
+        Promise.all([
+          responseMessage,
+          this._sendMessage(LOCK_MSG_ACTION.PING, [processId]),
+        ]),
+      this._syncTimeout,
+    )()
       .then(() => true)
       .catch(() => false)
       .finally(cancelWaitForMessage);

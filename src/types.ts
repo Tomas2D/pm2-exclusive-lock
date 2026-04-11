@@ -33,6 +33,8 @@ export interface IConfig {
   lockErrorResolution?: LOCK_ERROR_RESOLUTION;
   syncTimeout?: number;
   groupId?: string;
+  holdTimeout?: number;
+  masterHealthCheckInterval?: number;
 }
 
 export type Literal = number | string | boolean | null | undefined;
