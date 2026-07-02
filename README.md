@@ -73,9 +73,11 @@ lockService.destroy()
 ```typescript
 interface IConfig {
   logger?: ILogger;
-  lockTimeout?: number; // miliseconds
-  lockTimeoutResolution?: LOCK_TIMEOUT_RESOLUTION;  // 'THROW' or 'IGNORE'
-  syncTimeout?: number; // miliseconds
+  lockTimeout?: number; // milliseconds; how long to wait to acquire the lock
+  holdTimeout?: number; // milliseconds; hard ceiling on how long the lock may be held (defaults to lockTimeout)
+  lockErrorResolution?: LOCK_ERROR_RESOLUTION; // LOCK_ERROR_RESOLUTION.THROW or .IGNORE
+  syncTimeout?: number; // milliseconds; per-message PING/PONG timeout
+  masterHealthCheckInterval?: number; // milliseconds; how often the master is liveness-checked
   groupId?: string; // name of lock group
 }
 
