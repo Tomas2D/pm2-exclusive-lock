@@ -438,7 +438,16 @@ export class LockService {
   }
 
   private async _getProcessIds(): Promise<number[]> {
-    const instances = await this._getProcesses();
-    return instances.map((instance) => Number(instance.pm_id));
+    // Resolve send-targets straight from the pm2 process list, WITHOUT the
+    // per-send PING/PONG liveness sweep that _getProcesses() performs.
+    //
+    // The ids needed to *send* REQ_LOCK / REQ_UNLOCK are already available from
+    // `pm2 list` alone. The sweep added an O(N) IPC round-trip (a PING to every
+    // online peer, awaited up to syncTimeout) to the hot path of every lock
+    // acquire AND release. Liveness is still enforced out-of-band — the master
+    // by _startMasterHealthCheck() and the lock holder by the master-side
+    // holderCheckInterval — so mutual exclusion is preserved.
+    const instances = await getProcesses({ instanceStatus: ['online'] });
+    return instances.map((instance) => Number(instance.pm_id)).sort((a, b) => a - b);
   }
 }
