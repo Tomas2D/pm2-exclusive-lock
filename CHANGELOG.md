@@ -1,5 +1,21 @@
 # Changelog
 
+<a name="1.2.5"></a>
+## 1.2.5 (2026-07-08)
+
+### Changed
+
+- ⚡ Remove per-send PING/PONG liveness sweep from lock hot path [[062fdd0](https://github.com/Tomas2D/pm2-exclusive-lock/commit/062fdd094402a17089df73909fa057f6ffff26ab)]
+
+### Miscellaneous
+
+-  Merge pull request [#337](https://github.com/Tomas2D/pm2-exclusive-lock/issues/337) from Tomas2D/perf/remove-per-send-liveness-sweep [[00ca731](https://github.com/Tomas2D/pm2-exclusive-lock/commit/00ca731a1d85a258ce53ba48fae5fde25227c179)]
+-  Merge pull request [#336](https://github.com/Tomas2D/pm2-exclusive-lock/issues/336) from Tomas2D/dependabot/npm_and_yarn/systeminformation-5.31.6 [[70dc759](https://github.com/Tomas2D/pm2-exclusive-lock/commit/70dc7590806698d09ed75b4639cfdc734c760ffc)]
+-  Bump systeminformation from 5.31.4 to 5.31.6 [[df061b3](https://github.com/Tomas2D/pm2-exclusive-lock/commit/df061b38500ab6e22fc5d6c8c8250f45782d66d1)]
+-  Merge pull request [#335](https://github.com/Tomas2D/pm2-exclusive-lock/issues/335) from Tomas2D/dependabot/npm_and_yarn/follow-redirects-1.16.0 [[bbd03e8](https://github.com/Tomas2D/pm2-exclusive-lock/commit/bbd03e8b07a0919786b5c48e6a2dea3c25b8289f)]
+-  Bump follow-redirects from 1.15.9 to 1.16.0 [[b0b73f5](https://github.com/Tomas2D/pm2-exclusive-lock/commit/b0b73f5625d1b6e50537d2b4c67a8702a04786eb)]
+
+
 <a name="1.2.4"></a>
 ## 1.2.4 (2026-04-11)
 
